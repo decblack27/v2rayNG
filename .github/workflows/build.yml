@@ -23,6 +23,12 @@ jobs:
           distribution: temurin
           java-version: 17
 
+      - name: Download libv2ray.aar
+        run: |
+          mkdir -p app/libs
+          curl -L -o app/libs/libv2ray.aar \
+            https://github.com/2dust/AndroidLibXrayLite/releases/download/v26.10.21/libv2ray.aar
+
       - name: Update cmdline-tools and install platform 37
         run: |
           SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
