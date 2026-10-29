@@ -23,12 +23,12 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Accept licenses and install platform 37
+      - name: Update cmdline-tools and install platform 37
         run: |
-          set +o pipefail
           SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
-          yes | "$SDKMANAGER" --licenses
-          "$SDKMANAGER" "platforms;android-37"
+          yes | "$SDKMANAGER" --licenses > /dev/null 2>&1 || true
+          "$SDKMANAGER" --list | grep -i "android-37" || true
+          "$SDKMANAGER" "platforms;android-37.0"
 
       - name: Make gradlew executable
         run: chmod +x gradlew
