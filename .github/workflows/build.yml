@@ -7,6 +7,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: V2rayNG
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -19,10 +23,10 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Install Android platform 37
-        run: |
-          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses > /dev/null || true
-          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-37"
+      - name: Set up Android SDK and platform 37
+        uses: android-actions/setup-android@v3
+        with:
+          packages: "platforms;android-37"
 
       - name: Make gradlew executable
         run: chmod +x gradlew
@@ -34,4 +38,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: v2rayng-apk
-          path: app/build/outputs/apk/fdroid/debug/*.apk
+          path: V2rayNG/app/build/outputs/apk/fdroid/debug/*.apk
